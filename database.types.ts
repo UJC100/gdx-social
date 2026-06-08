@@ -53,13 +53,13 @@ export type Database = {
         }
         Relationships: []
       }
-      workspace: {
+      workspaces: {
         Row: {
           channels: string[] | null
           created_at: string
           id: string
           image_url: string | null
-          invite_code: string | null
+          invite_code: string
           members: string[] | null
           name: string
           regulators: string[] | null
@@ -71,7 +71,7 @@ export type Database = {
           created_at?: string
           id?: string
           image_url?: string | null
-          invite_code?: string | null
+          invite_code: string
           members?: string[] | null
           name: string
           regulators?: string[] | null
@@ -83,7 +83,7 @@ export type Database = {
           created_at?: string
           id?: string
           image_url?: string | null
-          invite_code?: string | null
+          invite_code?: string
           members?: string[] | null
           name?: string
           regulators?: string[] | null
@@ -105,7 +105,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      add_member_to_workspace: {
+        Args: { user_id: string; workspace_id: string }
+        Returns: undefined
+      }
+      add_workspace_to_user: {
+        Args: { new_workspace: string; user_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never

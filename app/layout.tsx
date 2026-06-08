@@ -4,6 +4,8 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils";
 import { Metadata } from "next";
+import { Toaster } from "sonner";
+
 
 const lato = Lato({subsets:['latin'],
   weight: ['100', '300', '400', '700', '900'],
@@ -19,6 +21,8 @@ export const metadata: Metadata = {
   description: "GDX social media app"
 }
 
+export const revalidate = 0
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -31,7 +35,10 @@ export default function RootLayout({
       className={cn("antialiased", fontMono.variable, "font-sans", lato.variable)}
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+            <main>{children}</main>
+        <Toaster />
+        </ThemeProvider>
       </body>
     </html>
   )
