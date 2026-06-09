@@ -9,14 +9,14 @@ const MainContent: FC<{ children: ReactNode }> = ({ children }) => {
   const { theme } = useTheme()
   const { color } = useColorPreferences()
 
-  let backgroundColor = "bg-dark"
+  let backgroundColor = "bg-black/80"
   if (color === "green") {
     backgroundColor = "bg-green-700"
   } else if (color === "blue") {
     backgroundColor = "bg-blue-700"
   }
   return (
-    <div className={cn("md:h-screen md:px-2 md:pt-14 md:pb-2")}>
+    <div className={cn("md:h-screen md:px-2 md:pt-14 md:pb-2", backgroundColor)}>
       <main
         className={cn(
           "overflow-scroll md:ml-70 md:h-full lg:ml-105 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-[6px] [&::-webkit-scrollbar-thumb]:bg-foreground/60 [&::-webkit-scrollbar-track]:bg-none",
