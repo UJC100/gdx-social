@@ -35,7 +35,7 @@ const CreateWorkspace = () => {
         <Typography
           text={`step ${currStep} of 2`}
           variant="p"
-          clasName="text-nuetral-400"
+          className="text-nuetral-400"
         />
         {stepInView}
       </div>
@@ -52,11 +52,11 @@ const Step1 = () => {
     <>
       <Typography
         text="What is the name of your company or team"
-        clasName="my-4"
+        className="my-4"
       />
       <Typography
         text="This will be the name of your GDX workspace - choose a name your team will recognize"
-        clasName="text-neutral-300 mb-10"
+        className="text-neutral-300 mb-10"
         variant="p"
       />
 
@@ -116,10 +116,10 @@ const Step2 = () => {
       </Button>
 
       <form>
-        <Typography text="Add workspace avatar" clasName="my-4" />
+        <Typography text="Add workspace avatar" className="my-4" />
         <Typography
           text="This image can be changed later in you workspace settings."
-          clasName="text-neutral-300"
+          className="text-neutral-300"
           variant="p"
         />
         <fieldset disabled={isSubmitting} className="mt-6 flex flex-col items-center space-y-9">

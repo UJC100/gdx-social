@@ -17,6 +17,7 @@ import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import Typography from "./ui/typography"
 import { FaRegCalendarCheck } from "react-icons/fa"
+import PrefrencesDialog from "./prefrences-dialog"
 
 type SidebarProp = {
   userWorkspaceData: Workspace[]
@@ -116,7 +117,7 @@ const Sidebar: FC<SidebarProp> = ({
                         <Typography
                           text={"In a meeting"}
                           variant="p"
-                          clasName="text-xs text-gray-600"
+                          className="text-xs text-gray-600"
                         />
                       </div>
 
@@ -146,18 +147,18 @@ const Sidebar: FC<SidebarProp> = ({
                           }
                           className="cursor-pointer rounded px-2 py-1 hover:bg-blue-700 hover:text-white"
                         />
-                        {/* Prefrences dialog */}
+                        <PrefrencesDialog/>
                          <hr className="bg-gray-400"/>
                          <div className="flex gap-2 items-center hover:text-white hover:bg-blue-700 px-2 py-1 rounded cursor-pointer">
                             <IoDiamondOutline className="text-orange-400"/>
                             <Typography variant="p"
                             text={`Upgrade ${currenWorkspaceData.name}`}
-                            clasName="text-xs"
+                            className="text-xs"
                             />
                          </div>
                              <Typography variant="p"
                             text={`Sign out of ${currenWorkspaceData.name}`}
-                            clasName="hover:text-white hover:bg-blue-700 px-2 py-1 rounded cursor-pointer"
+                            className="hover:text-white hover:bg-blue-700 px-2 py-1 rounded cursor-pointer"
                             />
                       </div>
                     </div>
