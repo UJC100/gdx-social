@@ -3,6 +3,7 @@ import {
   getCurrentWorkspaceData,
   getUserWorkSpaceData,
 } from "@/actions/workspaces"
+import InfoSection from "@/components/info-section"
 import Sidebar from "@/components/sidebar"
 import { Workspace as UserWorkspace } from "@/types/app"
 import { redirect } from "next/navigation"
@@ -35,6 +36,7 @@ const Workspace = async ({ params }: Props) => {
         userData={userData}
         userWorkspaceData={userWorkspaceData as UserWorkspace[]}
         />
+        <InfoSection/>
       </div>
       <div className="block min-h-screen md:hidden">mobile</div>
     </>

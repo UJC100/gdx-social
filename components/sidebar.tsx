@@ -5,10 +5,11 @@ import { FiPlus } from "react-icons/fi"
 import { GoDot, GoDotFill } from "react-icons/go"
 import { GiNightSleep } from "react-icons/gi"
 import { FaPencil } from "react-icons/fa6"
+import {IoDiamondOutline} from "react-icons/io5"
 
 import { User, Workspace } from "@/types/app"
 import SidebarNav from "./sidebar-nav"
-import { Tooltip, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover"
 import Image from "next/image"
 import { useColorPreferences } from "@/providers/color-prefrences"
@@ -145,13 +146,28 @@ const Sidebar: FC<SidebarProp> = ({
                           }
                           className="cursor-pointer rounded px-2 py-1 hover:bg-blue-700 hover:text-white"
                         />
+                        {/* Prefrences dialog */}
                          <hr className="bg-gray-400"/>
+                         <div className="flex gap-2 items-center hover:text-white hover:bg-blue-700 px-2 py-1 rounded cursor-pointer">
+                            <IoDiamondOutline className="text-orange-400"/>
+                            <Typography variant="p"
+                            text={`Upgrade ${currenWorkspaceData.name}`}
+                            clasName="text-xs"
+                            />
+                         </div>
+                             <Typography variant="p"
+                            text={`Sign out of ${currenWorkspaceData.name}`}
+                            clasName="hover:text-white hover:bg-blue-700 px-2 py-1 rounded cursor-pointer"
+                            />
                       </div>
                     </div>
                   </PopoverContent>
                 </Popover>
               </div>
             </TooltipTrigger>
+            <TooltipContent className="text-white bg-black border-black" side="right">
+                <Typography text={userData.name ? userData.name : userData.email} variant="p"/>
+            </TooltipContent>
           </Tooltip>
         </TooltipProvider>
       </div>
