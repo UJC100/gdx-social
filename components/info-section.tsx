@@ -13,7 +13,7 @@ const InfoSection = () => {
     } else if (color === "blue") {
         backgroundColor = "bg-blue-900" 
     }
-  return (<div className={cn('fixed left-20 rounded-l-xl md:w-52 lg:w-87.5 h-[calc(100%-63px)] flex z-20 flex-col justify-between items-center',backgroundColor)}>
+  return (<div className={cn('fixed text-white left-20 rounded-l-xl md:w-52 lg:w-87.5 h-[calc(100%-63px)] flex z-20 flex-col justify-between items-center',backgroundColor)}>
 
   </div>);
 };
