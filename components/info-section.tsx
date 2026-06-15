@@ -7,17 +7,19 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "./ui/collapsible"
-import { useState } from "react"
+import { FC, useState } from "react"
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
 import Typography from "./ui/typography"
 import { FaPlus } from "react-icons/fa6"
 import CreateChannelDialog from "./create-channel-dialog"
+import { User, Workspace } from "@/types/app"
 
-const InfoSection = () => {
+const InfoSection: FC<{userData: User; currentWorkspaceData: Workspace}> = ({userData, currentWorkspaceData}) => {
   const { color } = useColorPreferences()
 
   const [isChannelCollapsed, setIsChannelCollapsed] = useState(false)
   const [isDmCollapsed, setIsDmCollapsed] = useState(false)
+  const [dialogOpen, setDialogOpen] = useState(false)
   
 
   let backgroundColor = "bg-primary-light"
@@ -55,7 +57,7 @@ const InfoSection = () => {
                 <Typography variant="p" text="Channels" className="font-bold" />
               </CollapsibleTrigger>
               <div className={cn("cursor-pointer rounded-full p-2", hoverBg)}>
-                <FaPlus />
+                <FaPlus onClick={() => setDialogOpen(true)}/>
               </div>
             </div>
             <CollapsibleContent>
@@ -106,7 +108,12 @@ const InfoSection = () => {
         </div>
       </div>
 
-      <CreateChannelDialog/>
+      <CreateChannelDialog
+      setDialogOpen={setDialogOpen}
+      dialogOpen={dialogOpen}
+      workspaceId={currentWorkspaceData.id}
+      userId={userData.id}
+      />
     </div>
   )
 }

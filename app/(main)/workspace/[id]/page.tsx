@@ -22,11 +22,11 @@ const Workspace = async ({ params }: Props) => {
     return redirect("/auth")
   }
 
-  const [userWorkspaceData, userWorkspaceError] = await getUserWorkSpaceData(
+  const [userWorkspaceData] = await getUserWorkSpaceData(
     userData.workspaces!
   )
 
-  const [currentWorkspaceData, currentWorkspaceError] =
+  const [currentWorkspaceData] =
     await getCurrentWorkspaceData(id)
 
   return (
@@ -36,7 +36,7 @@ const Workspace = async ({ params }: Props) => {
         userData={userData}
         userWorkspaceData={userWorkspaceData as UserWorkspace[]}
         />
-        <InfoSection/>
+        <InfoSection currentWorkspaceData={currentWorkspaceData} userData={userData}/>
       </div>
       <div className="block min-h-screen md:hidden">mobile</div>
     </>
