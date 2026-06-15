@@ -12,9 +12,10 @@ import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
 import Typography from "./ui/typography"
 import { FaPlus } from "react-icons/fa6"
 import CreateChannelDialog from "./create-channel-dialog"
-import { User, Workspace } from "@/types/app"
+import { Channel, User, Workspace } from "@/types/app"
 
-const InfoSection: FC<{userData: User; currentWorkspaceData: Workspace}> = ({userData, currentWorkspaceData}) => {
+
+const InfoSection: FC<{userData: User; currentWorkspaceData: Workspace, userWorkspaceChannels: Channel[]}> = ({userData, currentWorkspaceData, userWorkspaceChannels}) => {
   const { color } = useColorPreferences()
 
   const [isChannelCollapsed, setIsChannelCollapsed] = useState(false)
@@ -61,21 +62,17 @@ const InfoSection: FC<{userData: User; currentWorkspaceData: Workspace}> = ({use
               </div>
             </div>
             <CollapsibleContent>
-              <Typography
-                variant="p"
-                text="# Channel-name-1"
-                className={cn("cursor-pointer rounded-sm p-2 py-1", hoverBg)}
-              />
-              <Typography
-                variant="p"
-                text="# Channel-name-2"
-                className={cn("cursor-pointer rounded-sm p-2 py-1", hoverBg)}
-              />
-              <Typography
-                variant="p"
-                text="# Channel-name-3"
-                className={cn("cursor-pointer rounded-sm p-2 py-1", hoverBg)}
-              />
+            {
+                userWorkspaceChannels.map(channel => (
+                    <Typography 
+                    key={channel.id}
+                    variant="p"
+                    text={`#${channel.name}`}
+                    className={cn('px-2 py-1 rounded-sm cursor-pointer', hoverBg)}
+                    />
+                ))
+            }
+           
             </CollapsibleContent>
           </Collapsible>
         </div>

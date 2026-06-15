@@ -15,6 +15,7 @@ import { Input } from "./ui/input"
 import { Button } from "./ui/button"
 import { toast } from "sonner"
 import { createChannel } from "@/actions/channels"
+import { useRouter } from "next/navigation"
 
 const CreateChannelDialog: FC<{
   dialogOpen: boolean
@@ -22,14 +23,13 @@ const CreateChannelDialog: FC<{
   workspaceId: string
   userId: string
 }> = ({ dialogOpen, setDialogOpen, workspaceId, userId }) => {
+  const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const formSchema = z.object({
-    name: z
-      .string()
-      .min(2, {
-        message: "workspace name must be more than 2 characters long",
-      }),
+    name: z.string().min(2, {
+      message: "workspace name must be more than 2 characters long",
+    }),
   })
 
   type FormValues = z.infer<typeof formSchema>
@@ -44,7 +44,13 @@ const CreateChannelDialog: FC<{
   async function onSubmit({ name }: FormValues) {
     try {
       setIsSubmitting(true)
+      await createChannel({
+        name,
+        userId,
+        workspaceId,
+      })
 
+      router.refresh()
       setIsSubmitting(false)
       setDialogOpen(false)
       form.reset()
@@ -52,18 +58,6 @@ const CreateChannelDialog: FC<{
     } catch (error) {
       setIsSubmitting(false)
     }
-
-    const result = await createChannel({
-      name,
-     userId,
-     workspaceId
-    })
-
-    if (result?.error) {
-      console.log(result.error)
-    }
-
-
   }
 
   return (

@@ -1,4 +1,5 @@
 import { getUserData } from "@/actions/get-user-data"
+import { getUserWorkspaceChannels } from "@/actions/get-user-workspace-channels"
 import {
   getCurrentWorkspaceData,
   getUserWorkSpaceData,
@@ -29,6 +30,10 @@ const Workspace = async ({ params }: Props) => {
   const [currentWorkspaceData] =
     await getCurrentWorkspaceData(id)
 
+    const userWorkspaceChannels = await getUserWorkspaceChannels(currentWorkspaceData.id, userData.id)
+
+
+
   return (
     <>
       <div className="hidden md:block">
@@ -36,7 +41,9 @@ const Workspace = async ({ params }: Props) => {
         userData={userData}
         userWorkspaceData={userWorkspaceData as UserWorkspace[]}
         />
-        <InfoSection currentWorkspaceData={currentWorkspaceData} userData={userData}/>
+        <InfoSection currentWorkspaceData={currentWorkspaceData} userData={userData}
+        userWorkspaceChannels={userWorkspaceChannels}
+        />
       </div>
       <div className="block min-h-screen md:hidden">mobile</div>
     </>
