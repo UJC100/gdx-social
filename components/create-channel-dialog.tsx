@@ -14,6 +14,7 @@ import {
 import { Input } from "./ui/input"
 import { Button } from "./ui/button"
 import { toast } from "sonner"
+import { createChannel } from "@/actions/channels"
 
 const CreateChannelDialog: FC<{
   dialogOpen: boolean
@@ -52,11 +53,10 @@ const CreateChannelDialog: FC<{
       setIsSubmitting(false)
     }
 
-    const result = await createWorkspace({
+    const result = await createChannel({
       name,
-      slug,
-      invite_code,
-      imageUrl: imageurl,
+     userId,
+     workspaceId
     })
 
     if (result?.error) {
