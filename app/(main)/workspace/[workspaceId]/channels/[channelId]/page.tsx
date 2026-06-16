@@ -4,8 +4,11 @@ import {
   getCurrentWorkspaceData,
   getUserWorkSpaceData,
 } from "@/actions/workspaces"
+import ChatHeader from "@/components/chat-header"
 import InfoSection from "@/components/info-section"
 import Sidebar from "@/components/sidebar"
+import TextEditor from "@/components/text-editor"
+import Typography from "@/components/ui/typography"
 import { Workspace as UserWorkspace } from "@/types/app"
 import { redirect } from "next/navigation"
 
@@ -33,11 +36,16 @@ const CurrentChannel = async ({ params }: Props) => {
     userData.id
   )
 
- 
+  const currentChannelData = userWorkspaceChannels.find(
+    (channel) => channel.id === channelId
+  )
+
+  if (!currentChannelData) return redirect("/")
 
   return (
     <div className="hidden md:block">
-      <Sidebar
+     <div className="h-[calc(100vh-256px)] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-[6px] [&::-webkit-scrollbar-thumb]:bg-foreground/60 [&::-webkit-scrollbar-track]:bg-none">
+       <Sidebar
         currenWorkspaceData={currentWorkspaceData}
         userData={userData}
         userWorkspaceData={userWorkspaceData as UserWorkspace[]}
@@ -48,8 +56,18 @@ const CurrentChannel = async ({ params }: Props) => {
         userWorkspaceChannels={userWorkspaceChannels}
         currentChannelId={channelId}
       />
+      <div className="relative w-full overflow-hidden p-4">
+        <ChatHeader title={currentChannelData.name} />
 
-     
+        <div className="mt-10">
+          <Typography text="Chat Content" variant="h4" />
+        </div>
+      </div>
+     </div>
+
+     <div className="m-4">
+      <TextEditor/>
+     </div>
     </div>
   )
 }
