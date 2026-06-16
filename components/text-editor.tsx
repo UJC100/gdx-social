@@ -1,8 +1,35 @@
-import React from 'react'
+'use client'
+
+import { FiPlus } from 'react-icons/fi'
+import { Send } from 'lucide-react';
+import {useEditor} from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit';
+import Placeholder from '@tiptap/extension-placeholder'
+
+
+import { Button } from './ui/button'
+import MenuBar from './menu-bar';
 
 const TextEditor = () => {
+    const editor = useEditor({
+        extensions: [
+            StarterKit, Placeholder.configure({placeholder: `Message #${ 'userName'}`})
+        ]
+    })
+
   return (
-    <div className='p-1 border dark:border-zinc-500 '>TextEditor</div>
+    <div className='p-1 border dark:border-zinc-500 border-neutral-700 rounded-md relative'>
+        <div className='sticky top-0 z-10'>
+           {editor && <MenuBar editor={editor}/>}
+        </div>
+        <div className='h-37.5 pt-11 flex w-full grow'>
+            {/* Editor content */}
+        </div>
+        <div className='absolute top-3 z-10 right-3 bg-black dark:bg-white cursor-pointer transition-all duration-500 hover:scale-110 text-white grid place-content-center rounded-full w-6 h-6'>
+          <FiPlus size={28} className='dark:text-black'/>
+        </div>
+        <Button size={'sm'} className='absolute bottom-1 right-1'><Send/></Button>
+    </div>
   )
 }
 
