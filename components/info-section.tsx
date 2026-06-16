@@ -8,19 +8,23 @@ import {
   CollapsibleTrigger,
 } from "./ui/collapsible"
 import { FC, useState } from "react"
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io"
+import { IoMdArrowDropdown,  IoMdArrowDropup} from "react-icons/io";
 import Typography from "./ui/typography"
 import { FaPlus } from "react-icons/fa6"
 import CreateChannelDialog from "./create-channel-dialog"
 import { Channel, User, Workspace } from "@/types/app"
+import { useRouter } from "next/navigation"
 
 
-const InfoSection: FC<{userData: User; currentWorkspaceData: Workspace, userWorkspaceChannels: Channel[]}> = ({userData, currentWorkspaceData, userWorkspaceChannels}) => {
+const InfoSection: FC<{userData: User; currentWorkspaceData: Workspace, userWorkspaceChannels: Channel[],
+currentChannelId: string
+}> = ({userData, currentWorkspaceData, userWorkspaceChannels, currentChannelId}) => {
   const { color } = useColorPreferences()
 
-  const [isChannelCollapsed, setIsChannelCollapsed] = useState(false)
-  const [isDmCollapsed, setIsDmCollapsed] = useState(false)
+  const [isChannelCollapsed, setIsChannelCollapsed] = useState(true)
+  const [isDmCollapsed, setIsDmCollapsed] = useState(true)
   const [dialogOpen, setDialogOpen] = useState(false)
+  const router = useRouter()
   
 
   let backgroundColor = "bg-primary-light"
@@ -30,12 +34,18 @@ const InfoSection: FC<{userData: User; currentWorkspaceData: Workspace, userWork
     backgroundColor = "bg-blue-900"
   }
 
-  let hoverBg = " hover:bg-primary-dark"
+  let secondaryBg = "bg-primary-dark"
   if (color === "green") {
-    hoverBg = "hover:bg-green-700"
+    secondaryBg = "bg-green-700"
   } else if (color === "blue") {
-    hoverBg = "hover:bg-blue-700"
+    secondaryBg = "bg-blue-700"
   }
+
+  const navigateToChannel = (channelId: string) => {
+    const url = `/workspace/${currentWorkspaceData.id}/channels/${channelId}`
+    router.push(url)
+  }
+
   return (
     <div
       className={cn(
@@ -54,23 +64,28 @@ const InfoSection: FC<{userData: User; currentWorkspaceData: Workspace, userWork
           >
             <div className="flex items-center justify-between">
               <CollapsibleTrigger className="flex items-center gap-2 cursor-pointer">
-                {isChannelCollapsed ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                {isChannelCollapsed ? <IoMdArrowDropdown /> : <IoMdArrowDropup />}
                 <Typography variant="p" text="Channels" className="font-bold" />
               </CollapsibleTrigger>
-              <div className={cn("cursor-pointer rounded-full p-2", hoverBg)}>
+              <div className={cn("cursor-pointer rounded-full p-2", `hover:${secondaryBg}`)}>
                 <FaPlus onClick={() => setDialogOpen(true)}/>
               </div>
             </div>
             <CollapsibleContent>
             {
-                userWorkspaceChannels.map(channel => (
-                    <Typography 
+                userWorkspaceChannels.map(channel =>   {
+                  const currentActiveChannel = currentChannelId === channel.id
+                    return   <Typography 
                     key={channel.id}
+                    onClick={() => navigateToChannel(channel.id)}
                     variant="p"
                     text={`#${channel.name}`}
-                    className={cn('px-2 py-1 rounded-sm cursor-pointer', hoverBg)}
+                    className={cn('px-2 py-1 rounded-sm cursor-pointer', `hover:${secondaryBg}`,
+                      currentActiveChannel && secondaryBg
+                    )}
                     />
-                ))
+                   }
+                )
             }
            
             </CollapsibleContent>
@@ -82,22 +97,22 @@ const InfoSection: FC<{userData: User; currentWorkspaceData: Workspace, userWork
             className="flex flex-col gap-2">
             <div className="flex items-center justify-between">
               <CollapsibleTrigger className="flex items-center gap-2 cursor-pointer">
-                {isDmCollapsed ? <IoIosArrowDown /> : <IoIosArrowUp />}
+                {isDmCollapsed ? <IoMdArrowDropdown /> : <IoMdArrowDropup />}
                 <Typography variant="p" text="Direct Messages" className="font-bold" />
               </CollapsibleTrigger>
-               <div className={cn("cursor-pointer rounded-full p-2", hoverBg)}>
+               <div className={cn("cursor-pointer rounded-full p-2", `hover:${secondaryBg}`)}>
                 <FaPlus />
               </div>
             </div>
             <CollapsibleContent>
             <Typography variant="p" text="User name 1"
-            className={cn('px-2 py-1 rounded-sm cursor-pointer', hoverBg)}
+            className={cn('px-2 py-1 rounded-sm cursor-pointer', `hover:${secondaryBg}`)}
             />
             <Typography variant="p" text="User name 2"
-            className={cn('px-2 py-1 rounded-sm cursor-pointer', hoverBg)}
+            className={cn('px-2 py-1 rounded-sm cursor-pointer', `hover:${secondaryBg}`)}
             />
             <Typography variant="p" text="User name 3"
-            className={cn('px-2 py-1 rounded-sm cursor-pointer', hoverBg)}
+            className={cn('px-2 py-1 rounded-sm cursor-pointer', `hover:${secondaryBg}`)}
             />
             </CollapsibleContent>
 

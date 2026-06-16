@@ -11,12 +11,12 @@ import { redirect } from "next/navigation"
 
 type Props = {
   params: Promise<{
-    id: string
+    workspaceId: string
   }>
 }
 
 const Workspace = async ({ params }: Props) => {
-  const { id } = await params
+  const { workspaceId } = await params
   const userData = await getUserData()
 
   if (!userData) {
@@ -28,7 +28,7 @@ const Workspace = async ({ params }: Props) => {
   )
 
   const [currentWorkspaceData] =
-    await getCurrentWorkspaceData(id)
+    await getCurrentWorkspaceData(workspaceId)
 
     const userWorkspaceChannels = await getUserWorkspaceChannels(currentWorkspaceData.id, userData.id)
 
@@ -43,6 +43,7 @@ const Workspace = async ({ params }: Props) => {
         />
         <InfoSection currentWorkspaceData={currentWorkspaceData} userData={userData}
         userWorkspaceChannels={userWorkspaceChannels}
+        currentChannelId=""
         />
       </div>
       <div className="block min-h-screen md:hidden">mobile</div>
