@@ -1,5 +1,7 @@
 import { createClient } from "@/supabase/supabaseServer"
+import { supabaseServercClientPages } from "@/supabase/supabaseServerPages";
 import { User } from "@/types/app";
+import { NextApiRequest, NextApiResponse } from "next";
 
 export const getUserData = async (): Promise<User | null> => {
     const supabase = await createClient();
@@ -23,4 +25,26 @@ export const getUserData = async (): Promise<User | null> => {
     }
 
     return data ? data[0] : null
+}
+
+
+export const getUserDataPages = async (req: NextApiRequest, res: NextApiResponse): Promise<User | null> => {
+const supabase = supabaseServercClientPages(req, res)
+
+const {
+    data: {user},
+} = await supabase.auth.getUser()
+if(!user) {
+    console.log('NO USER', user);
+    return null
+}
+
+const {data, error} = await supabase.from('user').select('*').eq('id', user.id);
+
+if(error) {
+    console.log(error);
+    return null
+}
+
+return data ? data[0] :null
 }
