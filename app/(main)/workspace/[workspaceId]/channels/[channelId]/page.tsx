@@ -66,7 +66,7 @@ const CurrentChannel = async ({ params }: Props) => {
      </div>
 
      <div className="m-4">
-      <TextEditor/>
+      <TextEditor apiUrl="/api/web-socket/messages" type='channel' channel={currentChannelData} workspaceData={currentWorkspaceData}/>
      </div>
     </div>
   )
