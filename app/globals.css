@@ -5,6 +5,8 @@
 @import "uploadthing/tw/v4";
 @source "../node_modules/@uploadthing/react/dist"; /** <-- depends on your project structure */
 
+ @plugin "@tailwindcss/typography";
+
 
 @custom-variant dark (&:is(.dark *));
 
@@ -132,4 +134,17 @@
   html {
     @apply font-sans;
     }
+}
+
+.tiptap.ProseMirror {
+  outline: none;
+  min-height: 150px;
+  width: 300px;
+}
+.tiptap p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
 }

@@ -96,7 +96,7 @@ const MenuBar: FC<{ editor: Editor }> = ({ editor }) => {
       </button>
 
       <Popover>
-        <PopoverTrigger className="mt-1.5">
+        <PopoverTrigger asChild>
             <button>
                 <BsEmojiSmile size={20}/>
             </button>
